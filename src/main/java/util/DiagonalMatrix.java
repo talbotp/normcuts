@@ -4,17 +4,12 @@ public class DiagonalMatrix implements Matrix {
 
     private double[] matrix;
 
-    public Matrix dot() {
-        return null;
-    }
-
-    public Matrix cross() {
-        return null;
+    public DiagonalMatrix(int length) {
+        this.matrix = new double[length];
     }
 
     public double get(int m, int n) {
-        if (m > matrix.length || n > matrix.length)
-            throw new IllegalArgumentException("Either m=" + m + " or n=" + n + " are larger than length=" + matrix.length);
+        isValidIndicesCheck(m, n);
 
         if (m != n)
             return 0;
@@ -22,11 +17,34 @@ public class DiagonalMatrix implements Matrix {
         return matrix[m];
     }
 
+    public void put(int m, int n, double value) {
+        isValidIndicesCheck(m, n);
+
+        if (m != n)
+            throw new IllegalArgumentException("m=" + m + " and n=" + n + " are not equal, cannot set value on diagonal matrix.");
+
+        matrix[m] = value;
+    }
+
+    public Matrix cross(Matrix other) {
+        return null;
+    }
+
+    public Matrix dot(Matrix other) {
+        return null;
+    }
+
     public int m() {
-        return 0;
+        return matrix.length;
     }
 
     public int n() {
-        return 0;
+        return matrix.length;
     }
+
+    private void isValidIndicesCheck(int m, int n) {
+        if (m < 0 || n < 0 || m > matrix.length || n > matrix.length)
+            throw new IllegalArgumentException("Invalid values for m=" + m + " or n=" + n + " on diagonal matrix with length=" + matrix.length);
+    }
+
 }

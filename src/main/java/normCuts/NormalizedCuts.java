@@ -1,7 +1,14 @@
 package normCuts;
 
+import util.Matrix;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class NormalizedCuts {
 
@@ -9,15 +16,31 @@ public class NormalizedCuts {
 
     private NormalizedCutsConfig config;
 
-    private int imgWidth;
-    private int imgHeight;
-    private int numPixels;
+    private BufferedImage img;
 
     public NormalizedCuts(NormalizedCutsConfig config) {
+        this.config = config;
 
-        logger.info("I LIKE TURTLES");
+        try {
+            this.img = ImageIO.read(new File(config.imgPath));
+        } catch (IOException e) {
+            logger.error("An error has occurred when building from path=" + config.imgPath);
+        }
 
-        this.config     = config;
-        this.numPixels  = 1;
+
     }
+
+    public int[] cluster() {
+        return null;
+    }
+
+    /**
+     * Compute the similarity matrix W.
+     * @return
+     */
+    private Matrix getSimilarityMatrix() {
+
+        return null;
+    }
+
 }

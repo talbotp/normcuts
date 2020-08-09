@@ -2,11 +2,13 @@ package util;
 
 public interface Matrix {
 
-    public Matrix dot();
+    public Matrix dot(Matrix other);
 
-    public Matrix cross();
+    public Matrix cross(Matrix other);
 
     public double get(int m, int n);
+
+    public void put(int m, int n, double value);
 
     public int m();
 
