@@ -1,11 +1,11 @@
 package normCuts;
 
 /**
- * Object to store data needed to run norm cuts.
+ * Object to store data needed to run normalized cuts.
+ *
+ * This is a WIP, find a clean way to order this.
  */
 public class NormalizedCutsConfig {
-
-    public String imgPath;
 
     public double sigmaI;
     public double sigmaX;
@@ -18,5 +18,9 @@ public class NormalizedCutsConfig {
     public int nClusters;
 
     public boolean useEigenvectors;
+
+    public boolean drawClusters;
+
+
 
 }

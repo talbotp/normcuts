@@ -1,29 +1,32 @@
 package util;
 
+/**
+ * A Diagonal matrix has only non-zero elements when m=n.
+ */
 public class DiagonalMatrix implements Matrix {
 
     private double[] matrix;
 
-    public DiagonalMatrix(int length) {
-        this.matrix = new double[length];
+    public DiagonalMatrix(int size) {
+        this.matrix = new double[size];
     }
 
-    public double get(int m, int n) {
-        isValidIndicesCheck(m, n);
+    public double get(int i, int j) {
+        isValidIndicesCheck(i, j);
 
-        if (m != n)
+        if (i != j)
             return 0;
 
-        return matrix[m];
+        return matrix[i];
     }
 
-    public void put(int m, int n, double value) {
-        isValidIndicesCheck(m, n);
+    public void put(int i, int j, double value) {
+        isValidIndicesCheck(i, j);
 
-        if (m != n)
-            throw new IllegalArgumentException("m=" + m + " and n=" + n + " are not equal, cannot set value on diagonal matrix.");
+        if (i != j)
+            throw new IllegalArgumentException("m=" + i + " and n=" + j + " are not equal, cannot set value on diagonal matrix.");
 
-        matrix[m] = value;
+        matrix[i] = value;
     }
 
     public Matrix cross(Matrix other) {
@@ -34,17 +37,13 @@ public class DiagonalMatrix implements Matrix {
         return null;
     }
 
-    public int m() {
+    public int size() {
         return matrix.length;
     }
 
-    public int n() {
-        return matrix.length;
-    }
-
-    private void isValidIndicesCheck(int m, int n) {
-        if (m < 0 || n < 0 || m > matrix.length || n > matrix.length)
-            throw new IllegalArgumentException("Invalid values for m=" + m + " or n=" + n + " on diagonal matrix with length=" + matrix.length);
+    private void isValidIndicesCheck(int i, int j) {
+        if (i < 0 || j < 0 || i > size() || j > size())
+            throw new IllegalArgumentException("Invalid values for m=" + i + " or n=" + j + " on diagonal matrix with length=" + size());
     }
 
 }

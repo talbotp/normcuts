@@ -6,12 +6,10 @@ public interface Matrix {
 
     public Matrix cross(Matrix other);
 
-    public double get(int m, int n);
+    public double get(int i, int j);
 
-    public void put(int m, int n, double value);
+    public void put(int i, int j, double value);
 
-    public int m();
-
-    public int n();
+    public int size();
 
 }
