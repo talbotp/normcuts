@@ -1,26 +1,127 @@
 package normCuts;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
  * Object to store data needed to run normalized cuts.
  *
  * This is a WIP, find a clean way to order this.
+ *
+ * TODO Maybe add default values.
  */
 public class NormalizedCutsConfig {
 
-    public double sigmaI;
-    public double sigmaX;
-    public double r;
-    public double l;
-    public double nCutThreshold;
-    public double accuracy;
+    protected double sigmaI;
+    protected double sigmaX;
+    protected double r;
+    protected double l;
+    protected double nCutThreshold;
+    protected double accuracy;
 
-    public int nCutType;
-    public int nClusters;
+    protected int nCutType;
+    protected int maxNumberOfClusters;
 
-    public boolean useEigenvectors;
+    protected boolean useEigenvectors;
 
-    public boolean drawClusters;
+    protected boolean drawClusters;
 
+    private static final String PROPERTIES_FILE = "config.properties";
+    private static final Logger logger = LogManager.getLogger(NormalizedCutsConfig.class);
 
+    public NormalizedCutsConfig(double sigmaI, double sigmaX, double r, double l, double nCutThreshold,
+                                double accuracy, String nCutType, int maxNumberOfClusters, boolean useEigenvectors,
+                                boolean drawClusters) {
+        this.sigmaI = sigmaI;
+        this.sigmaX = sigmaX;
+        this.r = r;
+        this.l = l;
+        this.nCutThreshold = nCutThreshold;
+        this.accuracy = accuracy;
 
+        this.nCutType = convertNCutType(nCutType);
+        this.maxNumberOfClusters = maxNumberOfClusters;
+
+        this.useEigenvectors = useEigenvectors;
+        this.drawClusters = drawClusters;
+
+        logger.debug("Successfully built object " + toString());
+    }
+
+    public static NormalizedCutsConfig buildFromProperties() throws FileNotFoundException {
+        Properties properties = new Properties();
+        InputStream inputStream = NormalizedCuts.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+
+        if (inputStream != null) {
+            try {
+                properties.load(inputStream);
+            } catch (IOException e) {
+                logger.error("Error loading input stream into properties.");
+            }
+        } else {
+            throw new FileNotFoundException("Cannot find property file=" + PROPERTIES_FILE + " in the classpath.");
+        }
+
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            logger.error("Error closing inputStream when building config from properties.");
+        }
+
+        double sigmaI           = getDouble("sigmaI",           properties);
+        double sigmaX           = getDouble("sigmaX",           properties);
+        double r                = getDouble("r",                properties);
+        double l                = getDouble("l",                properties);
+        double nCutThreshold    = getDouble("nCutThreshold",    properties);
+        double accuracy         = getDouble("accuracy",         properties);
+
+        String nCutType         = getString("nCutType",         properties);
+        int maxNumberOfClusters = getInt("maxNumberOfClusters", properties);
+        boolean useEigenvectors = getBoolean("useEigenvectors", properties);
+        boolean drawClusters    = getBoolean("drawClusters",    properties);
+
+        return new NormalizedCutsConfig(sigmaI, sigmaX, r, l, nCutThreshold, accuracy,
+                nCutType, maxNumberOfClusters, useEigenvectors, drawClusters);
+    }
+
+    private int convertNCutType(String nCutType) {
+        return 1;
+    }
+
+    private static double getDouble(String propName, Properties properties) {
+        return Double.parseDouble(properties.getProperty(propName));
+    }
+
+    private static int getInt(String propName, Properties properties) {
+        return Integer.parseInt(properties.getProperty(propName));
+    }
+
+    private static String getString(String propName, Properties properties) {
+        return properties.getProperty(propName);
+    }
+
+    private static boolean getBoolean(String propName, Properties properties) {
+        return Boolean.parseBoolean(properties.getProperty(propName));
+    }
+
+    @Override
+    public String toString() {
+        return "NormalizedCutsConfig{" +
+                "sigmaI=" + sigmaI +
+                ", sigmaX=" + sigmaX +
+                ", r=" + r +
+                ", l=" + l +
+                ", nCutThreshold=" + nCutThreshold +
+                ", accuracy=" + accuracy +
+                ", nCutType=" + nCutType +
+                ", maxNumberOfClusters=" + maxNumberOfClusters +
+                ", useEigenvectors=" + useEigenvectors +
+                ", drawClusters=" + drawClusters +
+                "}.";
+    }
 }

@@ -4,8 +4,9 @@ LOG_DIR=logs
 
 clean:
 	@rm -rf ${LOG_DIR}
+	@${MAVEN} clean
 
-build:
+compile:
 	@${MAVEN} compile
 
 run:
