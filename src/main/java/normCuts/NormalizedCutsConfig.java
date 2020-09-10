@@ -24,7 +24,7 @@ public class NormalizedCutsConfig {
     protected double nCutThreshold;
     protected double accuracy;
 
-    protected int nCutType;
+    protected CutType nCutType;
     protected int maxNumberOfClusters;
 
     protected boolean useEigenvectors;
@@ -35,7 +35,7 @@ public class NormalizedCutsConfig {
     private static final Logger logger = LogManager.getLogger(NormalizedCutsConfig.class);
 
     public NormalizedCutsConfig(double sigmaI, double sigmaX, double r, double l, double nCutThreshold,
-                                double accuracy, String nCutType, int maxNumberOfClusters, boolean useEigenvectors,
+                                double accuracy, CutType nCutType, int maxNumberOfClusters, boolean useEigenvectors,
                                 boolean drawClusters) {
         this.sigmaI = sigmaI;
         this.sigmaX = sigmaX;
@@ -44,7 +44,7 @@ public class NormalizedCutsConfig {
         this.nCutThreshold = nCutThreshold;
         this.accuracy = accuracy;
 
-        this.nCutType = convertNCutType(nCutType);
+        this.nCutType = nCutType;
         this.maxNumberOfClusters = maxNumberOfClusters;
 
         this.useEigenvectors = useEigenvectors;
@@ -80,7 +80,7 @@ public class NormalizedCutsConfig {
         double nCutThreshold    = getDouble("nCutThreshold",    properties);
         double accuracy         = getDouble("accuracy",         properties);
 
-        String nCutType         = getString("nCutType",         properties);
+        CutType nCutType        = getCutType("nCutType",        properties);
         int maxNumberOfClusters = getInt("maxNumberOfClusters", properties);
         boolean useEigenvectors = getBoolean("useEigenvectors", properties);
         boolean drawClusters    = getBoolean("drawClusters",    properties);
@@ -89,8 +89,24 @@ public class NormalizedCutsConfig {
                 nCutType, maxNumberOfClusters, useEigenvectors, drawClusters);
     }
 
-    private int convertNCutType(String nCutType) {
-        return 1;
+    @Override
+    public String toString() {
+        return "NormalizedCutsConfig{" +
+                "sigmaI=" + sigmaI +
+                ", sigmaX=" + sigmaX +
+                ", r=" + r +
+                ", l=" + l +
+                ", nCutThreshold=" + nCutThreshold +
+                ", accuracy=" + accuracy +
+                ", nCutType=" + nCutType +
+                ", maxNumberOfClusters=" + maxNumberOfClusters +
+                ", useEigenvectors=" + useEigenvectors +
+                ", drawClusters=" + drawClusters +
+                "}.";
+    }
+
+    private static CutType getCutType(String propName, Properties properties) {
+        return CutType.valueOf(properties.getProperty(propName));
     }
 
     private static double getDouble(String propName, Properties properties) {
@@ -109,19 +125,4 @@ public class NormalizedCutsConfig {
         return Boolean.parseBoolean(properties.getProperty(propName));
     }
 
-    @Override
-    public String toString() {
-        return "NormalizedCutsConfig{" +
-                "sigmaI=" + sigmaI +
-                ", sigmaX=" + sigmaX +
-                ", r=" + r +
-                ", l=" + l +
-                ", nCutThreshold=" + nCutThreshold +
-                ", accuracy=" + accuracy +
-                ", nCutType=" + nCutType +
-                ", maxNumberOfClusters=" + maxNumberOfClusters +
-                ", useEigenvectors=" + useEigenvectors +
-                ", drawClusters=" + drawClusters +
-                "}.";
-    }
 }

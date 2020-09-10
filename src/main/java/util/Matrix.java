@@ -10,6 +10,8 @@ public interface Matrix {
 
     public void put(int i, int j, double value);
 
+    public double sumRow(int j);
+
     public int size();
 
 }

@@ -1,4 +1,5 @@
 import normCuts.NormalizedCutsConfig;
+import normCuts.CutType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -16,7 +17,6 @@ public class App {
         logger.info("Starting Normalized Cuts");
 
         NormalizedCutsConfig config = NormalizedCutsConfig.buildFromProperties();
-
 
     }
 

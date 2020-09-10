@@ -79,6 +79,15 @@ public class SparseMatrix implements Matrix {
         return result;
     }
 
+    public double sumRow(int rowNumber) {
+        if (rowNumber > n) throw new IllegalArgumentException("row=" + rowNumber + " is larger than n=" + n + ".");
+        SparseVector row = rows[rowNumber];
+        double sum = 0;
+        for (int i = 0; i < row.size(); i++)
+            sum += row.get(i);
+        return sum;
+    }
+
     // return a string representation
     public String toString() {
         StringBuilder s = new StringBuilder();

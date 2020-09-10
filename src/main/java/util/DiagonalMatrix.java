@@ -37,6 +37,11 @@ public class DiagonalMatrix implements Matrix {
         return null;
     }
 
+    @Override
+    public double sumRow(int j) {
+        return matrix[j];
+    }
+
     public int size() {
         return matrix.length;
     }
